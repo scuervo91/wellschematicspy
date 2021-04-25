@@ -1,7 +1,7 @@
 # Wellschematicspy 
 
-+ **Documentation** [http://scuervo91.github.io/wellshematicspy](http://scuervo91.github.io/wellshematicspy)
-+ **Sorce Code** [https://github.com/scuervo91/wellshematicspy](https://github.com/scuervo91/wellshematicspy)
++ **Documentation** [http://scuervo91.github.io/wellschematicspy](http://scuervo91.github.io/wellshematicspy)
++ **Sorce Code** [https://github.com/scuervo91/wellschematicspy](https://github.com/scuervo91/wellshematicspy)
 
 Wellschematicspy is a simple Well Schematics plotting based on matplotlib (plot) and Pydantic (Data Validation). It allows to define a well architecture by declare OpenHoles, Casings and Completions. 
 
