@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "wellschematicspy"
-version = "0.1.0"
+version = "v0.1.0"
 description = "Oil&Gas Well Schematics definition and plot"
 authors = ["Santiago Cuervo <scuervo91@gmail.com>"]
 license = "MIT"
