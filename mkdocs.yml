@@ -1,0 +1,28 @@
+site_name: DCApy
+theme:
+  name: material
+  palette:
+    scheme: preference
+    primary: blue grey
+    accent: deep purple
+  features:
+    - navigation.instant
+    - navigation.tabs
+    - navigation.sections
+    - navigation.expand
+    - search.suggest
+    - search.highlight
+  icon:
+    repo: fontawesome/brands/github
+
+nav:
+  - Home: index.md
+  - Tutorial:
+    - Intro: tutorial/1-Intro.md
+    - First Steps: tutorial/first_steps/Create_Schema_Simple.md
+
+repo_url: https://github.com/scuervo91/wellschematicspy
+repo_name: scuervo91/wellschematicspy
+
+plugins:
+  - search
