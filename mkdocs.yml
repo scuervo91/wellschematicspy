@@ -18,11 +18,12 @@ theme:
 nav:
   - Home: index.md
   - Tutorial:
-    - Intro: tutorial/1-Intro.md
-    - First Steps: tutorial/first_steps/Create_Schema_Simple.md
+    - Intro: examples/1-Intro.md
+    - First Steps: examples/Create_Schema_Simple.ipynb
 
 repo_url: https://github.com/scuervo91/wellschematicspy
 repo_name: scuervo91/wellschematicspy
 
 plugins:
   - search
+  - mkdocs-jupyter
