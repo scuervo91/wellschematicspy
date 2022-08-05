@@ -1,16 +1,33 @@
 from pydantic import BaseModel, Extra, validator, Field
 from pydantic.color import Color
 from typing import List, Optional
+import pandas as pd
+from datetime import date
 
 class SectionModel(BaseModel):
     name:str = Field(...)
     top: float = Field(...)
     bottom: float = Field(...)
+    install_date: Optional[date] = Field(None)
+    remove_date: Optional[date] = Field(None)
 
     class Config:
         validate_assignment = True
-        extra = Extra.forbid
+        extra = Extra.ignore
         
+    def is_installed_at_date(self, date:date):
+        if self.install_date is None:
+            return False
+        if self.install_date is not None and self.remove_date is not None:
+            return self.install_date <= date <= self.remove_date
+        if self.install_date is not None and self.remove_date is None:
+            return date >= self.install_date
+        if self.install_date is None and self.remove_date is None:
+            return False
+    
+    def to_series(self):
+        return pd.Series(self.dict())
+
 class OpenHole(SectionModel):
     diameter: float = Field(...)  
     color: Color = Field('#cfd4d3')
@@ -19,7 +36,7 @@ class OpenHole(SectionModel):
     class Config:
         validate_assignment = True
         validate_all = True
-        extra = Extra.forbid
+        extra = Extra.ignore
 
     
 class Cement(SectionModel):
@@ -30,7 +47,7 @@ class Cement(SectionModel):
     class Config:
         validate_assignment = True
         validate_all = True
-        extra = Extra.forbid
+        extra = Extra.ignore
     
 class Perforation(SectionModel):
     oh: float = Field(...) 
@@ -42,7 +59,7 @@ class Perforation(SectionModel):
     class Config:
         validate_assignment = True
         validate_all = True
-        extra = Extra.forbid
+        extra = Extra.ignore
     
 class Casing(SectionModel):
     diameter: float = Field(...) 
@@ -55,7 +72,7 @@ class Casing(SectionModel):
     class Config:
         validate_assignment = True
         validate_all = True
-        extra = Extra.forbid
+        extra = Extra.ignore
         
 class Tubing(SectionModel):
     diameter: float  = Field(...)
@@ -66,7 +83,7 @@ class Tubing(SectionModel):
     class Config:
         validate_assignment = True
         validate_all = True
-        extra = Extra.forbid
+        extra = Extra.ignore
     
 class BridgePlug(SectionModel):
     diameter: float  = Field(...)
@@ -76,7 +93,7 @@ class BridgePlug(SectionModel):
     class Config:
         validate_assignment = True
         validate_all = True
-        extra = Extra.forbid
+        extra = Extra.ignore
 
 class Sleeve(SectionModel):
     diameter: float  = Field(...)
@@ -86,7 +103,7 @@ class Sleeve(SectionModel):
     class Config:
         validate_assignment = True
         validate_all = True
-        extra = Extra.forbid
+        extra = Extra.ignore
     
 class Plug(SectionModel):
     diameter: float  = Field(...)
@@ -96,7 +113,7 @@ class Plug(SectionModel):
     class Config:
         validate_assignment = True
         validate_all = True
-        extra = Extra.forbid
+        extra = Extra.ignore
 
 class Packer(SectionModel):
     diameter: float  = Field(...)
@@ -107,7 +124,7 @@ class Packer(SectionModel):
     class Config:
         validate_assignment = True
         validate_all = True
-        extra = Extra.forbid
+        extra = Extra.ignore
     
     @validator('inner_diameter')
     def check_inner_dia_is_less_diameter(cls,v, values):

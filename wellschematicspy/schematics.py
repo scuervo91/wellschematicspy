@@ -8,6 +8,7 @@ import numpy as np
 from pydantic import BaseModel, Extra, Field
 from pydantic.color import Color
 from typing import List, Optional, Union
+from datetime import date
 
 #local imports 
 
@@ -65,12 +66,13 @@ class WellSchema(BaseModel):
     
     def plot(self,
         ax=None,
-        tight_layout=True,
-        dtick=True,
-        xtick = False,
-        lims=None,
-        fontsize=8,
-        which:list=['open_hole','casing','completion']
+        tight_layout:bool=True,
+        dtick:bool=True,
+        xtick:bool = False,
+        lims:List[float]=None,
+        fontsize:int=8,
+        which:list=['open_hole','casing','completion'],
+        at_date:date = None
     ):
         if ax is None:
             fig = plt.figure(figsize=(4, 9))
@@ -84,6 +86,9 @@ class WellSchema(BaseModel):
         #Open Hole
         if 'open_hole' in which:
             for o in self.open_holes:
+                if at_date is not None:
+                    if not o.is_installed_at_date(at_date):
+                        continue
                 top = o.top
                 bottom = o.bottom
                 length = bottom - top
@@ -102,6 +107,9 @@ class WellSchema(BaseModel):
                 
         if self.casings is not None and 'casing' in which:
             for c in self.casings:
+                if at_date is not None:
+                    if not c.is_installed_at_date(at_date):
+                        continue
                 top = c.top
                 bottom = c.bottom
                 length = bottom - top
@@ -138,6 +146,9 @@ class WellSchema(BaseModel):
     
                 if c.cement:
                     for cem in c.cement:
+                        if at_date is not None:
+                            if not cem.is_installed_at_date(at_date):
+                                continue
                         cement_color = cem.color.as_hex()
                         cement_hatch = cem.hatch
                         cement_oh = cem.oh
@@ -169,6 +180,9 @@ class WellSchema(BaseModel):
 
                 if c.perforations:
                     for perf in c.perforations:
+                        if at_date is not None:
+                            if not o.is_installed_at_date(at_date):
+                                continue
                         perf_color = perf.color.as_hex()
                         perf_hatch = perf.hatch
                         perf_scale = perf.scale
@@ -200,6 +214,9 @@ class WellSchema(BaseModel):
     
         if self.completion is not None and 'completion' in which:
             for c in self.completion:
+                if at_date is not None:
+                    if not c.is_installed_at_date(at_date):
+                        continue
                 top = c.top
                 bottom = c.bottom
                 length = bottom - top
