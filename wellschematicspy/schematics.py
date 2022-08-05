@@ -18,7 +18,7 @@ from .models import BridgePlug, OpenHole, Casing, Cement, Perforation, Sleeve, P
 class WellSchema(BaseModel):
     open_holes: List[OpenHole]  = Field(...)
     casings: Optional[List[Casing]]  = Field(None)
-    completion: Optional[List[Union[Sleeve, Packer,Plug, BridgePlug, Tubing]]]  = Field(None)
+    completion: Optional[List[Union[Packer,Sleeve,Plug, BridgePlug, Tubing]]]  = Field(None)
     
     class Config:
         validate_assignment = True
@@ -250,6 +250,10 @@ class WellSchema(BaseModel):
                     inner_diameter = c.inner_diameter
                     xli =  0.5*(1-inner_diameter/di_factor)
                     width = xli - xl
+                    
+                    print((xl,top))
+                    print(width)
+                    print(length)
                     seg_left = mpatches.Rectangle(
                         (xl, top), 
                         width, 
